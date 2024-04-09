@@ -1,0 +1,1 @@
+making a react native expo application with the default configuration we need to have  _layout.js file and the index.js file. These two files are the most important files in the react native project.
