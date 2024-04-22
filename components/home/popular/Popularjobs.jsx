@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import {
   View,
   Text,
@@ -15,12 +16,23 @@ import useFetch from "../../../hook/useFetch";
 
 const Popularjobs = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useFetch('search', {
+  const { data, isLoading, error } = useFetch("search", {
     query: "React developer",
     num_pages: "1",
-  })
+  });
 
-  console.log(data);
+  const [jobData, setJobData] = useState([]);
+
+  // Extract the job data from the API response
+  useEffect(() => {
+    if (data ) {
+      setJobData(data);
+    }
+  }, [data]);
+
+  console.log(" The fetched data", data);
+
+  const limitedJobData = jobData.slice(0, 5);
 
   return (
     <View style={styles.container}>
@@ -36,10 +48,12 @@ const Popularjobs = () => {
           <ActivityIndicator />
         ) : error ? (
           <Text>Something went wrong</Text>
+        ) : limitedJobData.length === 0 ? (
+          <Text>No jobs found</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4, 5]}
-            renderItem={({ item }) => <PopularJobCard item={item}/>}
+            data={limitedJobData}
+            renderItem={({ item }) => <PopularJobCard item={item} />}
             keyExtractor={(item) => item?.job_id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal={true}
