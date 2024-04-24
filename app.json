@@ -7,7 +7,7 @@
     "plugins": [
       "expo-router"
     ],
-    "name": "job_search_app",
-    "slug": "job_search_app"
+    "name": "Job Search App",
+    "slug": "Job Search App"
   }
 }
